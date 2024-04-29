@@ -8,7 +8,7 @@ import {
   User,
   Revenue,
 } from './definitions';
-import { formatCurrency } from './utils';
+import { formatCurrency, formatCurrency2 } from './utils';
 
 export async function fetchRevenue() {
   // Add noStore() here to prevent the response from being cached.
@@ -31,7 +31,16 @@ export async function fetchRevenue() {
     throw new Error('Failed to fetch revenue data.');
   }
 }
-
+export async function fetchRevenue2() {
+  try {
+    const result = await sql<Revenue>`SELECT * FROM revenue`;
+    const data = result.rows;
+    return data;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch revenue data.');
+  }
+}
 export async function fetchLatestInvoices() {
   try {
     const data = await sql<LatestInvoiceRaw>`
@@ -51,7 +60,23 @@ export async function fetchLatestInvoices() {
     throw new Error('Failed to fetch the latest invoices.');
   }
 }
-
+export async function fetchLatestInvoices2() {
+  try {
+    const result = await sql<LatestInvoiceRaw>`
+      SELECT invoices.amount, customers.name, customers.image_url, customers.email, invoices.id
+      FROM invoices
+      JOIN customers ON invoices.customer_id = customers.id
+      ORDER BY invoices.date DESC
+      LIMIT 10`;
+    const data = result.rows.map((order, index) => {
+      return { ...order, amount: formatCurrency2(order.amount) };
+    });
+    return data;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch revenue data.');
+  }
+}
 export async function fetchCardData() {
   try {
     // You can probably combine these into a single SQL query
@@ -86,7 +111,7 @@ export async function fetchCardData() {
     throw new Error('Failed to fetch card data.');
   }
 }
-
+/////////////////////////////////
 const ITEMS_PER_PAGE = 6;
 export async function fetchFilteredInvoices(
   query: string,
