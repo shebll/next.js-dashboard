@@ -17,6 +17,12 @@ const customers = [
     image_url: '/customers/delba-de-oliveira.png',
   },
   {
+    id: '3958dc9e-712f-4377-85e9-fec5b6a6442a',
+    name: 'Delba2 de Oliveira',
+    email: 'delba2@oliveira.com',
+    image_url: '/customers/delba-de-oliveira.png',
+  },
+  {
     id: '3958dc9e-742f-4377-85e9-fec4b6a6442a',
     name: 'Lee Robinson',
     email: 'lee@robinson.com',
@@ -73,6 +79,36 @@ const customers = [
 ];
 
 const invoices = [
+  {
+    customer_id: customers[0].id,
+    amount: 15795,
+    status: 'pending',
+    date: '2022-12-06',
+  },
+  {
+    customer_id: customers[1].id,
+    amount: 20348,
+    status: 'pending',
+    date: '2022-11-14',
+  },
+  {
+    customer_id: customers[4].id,
+    amount: 3040,
+    status: 'paid',
+    date: '2022-10-29',
+  },
+  {
+    customer_id: customers[3].id,
+    amount: 44800,
+    status: 'paid',
+    date: '2023-09-10',
+  },
+  {
+    customer_id: customers[5].id,
+    amount: 34577,
+    status: 'pending',
+    date: '2023-08-05',
+  },
   {
     customer_id: customers[0].id,
     amount: 15795,
